@@ -157,7 +157,6 @@
 |---|---|
 | 🏅 **JPMC Code For Good 2025** | Selected participant — scalable tech solutions for NGOs |
 | 🎯 **JEE Mains 2022** | AIR 7.9K / 1M+ candidates |
-| 🥈 **Recode 26.0** | 2nd place out of 700+ participants (NIT Durgapur) |
 | 📈 **Academic** | 9.71 CGPA at NIT Durgapur |
 
 ---
