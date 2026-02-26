@@ -21,7 +21,7 @@
 
 ## Featured Systems
 
-### 🔗 High-Performance URL Shortener
+### 🔗 High-Performance URL Shortener &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/URL-Shortener)
 
 **Problem**
 - URL shortening services at scale face bottlenecks in redirect latency, database write throughput, and cache invalidation under concurrent load
@@ -39,13 +39,7 @@
   <img src="./docs/url-shortener.png" alt="URL Shortener Architecture" width="75%" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/MonarchRyuzaki/URL-Shortener">
-    <img src="https://img.shields.io/badge/View_Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
-  </a>
-</p>
-
-### 💬 Real-Time Chat System
+### 💬 Real-Time Chat System &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/Real-Time-Chat-App)
 
 **Problem**
 - Scalability bottlenecks in monolithic WebSocket servers
@@ -66,13 +60,7 @@
   <img src="./docs/chat-app.png" alt="Chat System Architecture" width="75%" />
 </p>
 
-<p align="center">
-  <a href="https://github.com/MonarchRyuzaki/Real-Time-Chat-App">
-    <img src="https://img.shields.io/badge/View_Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
-  </a>
-</p>
-
-### 🚀 Go BitTorrent Client
+### 🚀 Go BitTorrent Client &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/go-bittorrent-client)
 
 **Problem**
 - Traditional HTTP downloads are fragile — a dropped connection means lost progress
@@ -90,13 +78,7 @@
 - Parallel piece downloads across the entire peer swarm with **per-peer locking** (zero cross-peer contention)
 - Robust error recovery — survived flaky peers, broken pipes, and silent timeouts without crashes
 
-<p align="center">
-  <a href="https://github.com/MonarchRyuzaki/go-bittorrent-client">
-    <img src="https://img.shields.io/badge/View_Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
-  </a>
-</p>
-
-### 🕷️ Concurrent Web Crawler `🚧 In Progress`
+### 🕷️ Concurrent Web Crawler `🚧 In Progress` &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/Web-Crawler)
 
 **Problem**
 - Duplicate fetches, DNS lookup overhead, and politeness violations that trigger IP bans
@@ -117,12 +99,6 @@
 
 <p align="center">
   <img src="./docs/web-crawler.png" alt="Web Crawler Architecture" width="75%" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/MonarchRyuzaki/Web-Crawler">
-    <img src="https://img.shields.io/badge/View_Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
-  </a>
 </p>
 
 ---
