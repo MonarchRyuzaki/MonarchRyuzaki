@@ -78,24 +78,30 @@
 - Parallel piece downloads across the entire peer swarm with **per-peer locking** (zero cross-peer contention)
 - Robust error recovery — survived flaky peers, broken pipes, and silent timeouts without crashes
 
-### 🕷️ Concurrent Web Crawler `🚧 In Progress` &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/Web-Crawler)
+### 🕷️ Concurrent Web Crawler &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/Web-Crawler)
 
 **Problem**
-- Duplicate fetches, DNS lookup overhead, and politeness violations that trigger IP bans
-- Spider traps that waste entire crawl budgets on infinite generated pages
-- Coordinating URL prioritization, per-host rate limiting, and content deduplication — all concurrently
+
+- Duplicate fetches waste crawl budget — page X → A and page Y → A both enqueue A without deduplication
+- Spider traps (infinite generated pages like `/events/2026/02/`, `/2026/03/`…) consume the entire crawl run on junk
+- DNS lookup overhead compounds across thousands of requests to the same domains
+- Politeness violations (hammering a single host) trigger IP bans and honeypot detection
+- Coordinating URL prioritization, per-host rate limiting, and content deduplication across concurrent workers
 
 **Solution**
-- **Two-stage frontier architecture** in **Go**: 5 front queues ranked by **OpenPageRank scores** (weighted random selection with exponential decay), 5 back queues with domain-affinity routing for per-host politeness
-- **robots.txt compliance** with cached `Disallow` path matching
-- **DNS caching** via `dnscache` to eliminate redundant lookups
-- **SHA-256 content deduplication** and **go-readability** parsing to strip boilerplate before storage
-- URL filtering: scheme validation, spider trap detection, relative-to-absolute conversion
+
+- Two-stage frontier: 5 priority queues ranked by OpenPageRank scores (weighted random with exponential decay) → 5 back queues with domain-affinity routing for per-host politeness
+- Two-tier URL deduplication: Redis Bloom Filter as a fast "definitely not seen" gate (~1ms), DynamoDB as ground truth for false positives — eliminates ~90% of DB reads
+- DynamoDB conditional writes (`attribute_not_exists`) for atomic content storage without read-before-write overhead
+- robots.txt compliance with cached Disallow path matching to avoid spider traps and honeypots
+- DNS caching via dnscache, SHA-256 content hashing, and go-readability parsing to strip boilerplate before storage
+- 5 fetcher workers + 5 processing workers with channel-based coordination
 
 **Outcome**
-- Interface-driven architecture (`Frontier`, `Fetcher`, `Parser`, `Storage`) enabling zero-change swaps to cloud-native backends
+
+- ~4 fresh pages/second on a single instance (full pipeline: DNS → robots.txt → fetch → extract → hash → Bloom filter → DynamoDB write)
+- Interface-driven architecture (`Frontier`, `Fetcher`, `Parser`, `Storage`, `Metrics`) — swapped from in-memory maps to DynamoDB + Redis with zero changes to the crawl loop
 - Correctly avoids spider traps, honeypots, and duplicate work across the entire crawl
-- Designed for extension: **Bloom filter + DynamoDB** URL dedup, **SimHash** near-duplicate detection, **sitemap.xml** bulk discovery
 
 <p align="center">
   <img src="./docs/web-crawler.png" alt="Web Crawler Architecture" width="75%" />
