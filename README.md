@@ -98,7 +98,36 @@
 - Designed for extension: **Bloom filter + DynamoDB** URL dedup, **SimHash** near-duplicate detection, **sitemap.xml** bulk discovery
 
 <p align="center">
-  <img src="./docs/web-crawler.png" alt="Web Crawler Architecture" width="75%" />
+  <img src="./docs/web-crawler-with-search-queue.png" alt="Web Crawler Architecture" width="75%" />
+</p>
+
+### 🔍 Crawler Search Pipeline &nbsp; [![GitHub](https://img.shields.io/badge/View_Repo-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/MonarchRyuzaki/crawler-search-pipeline)
+
+**Problem**
+- Crawled documents require both lexical and semantic search capabilities for comprehensive retrieval
+- Merging results from multiple search algorithms without reliable scoring mechanisms
+- Processing high-volume document streams from queues while maintaining search freshness
+- Balancing keyword relevance with semantic similarity in results
+
+**Solution**
+- **Hybrid search architecture** combining **BM25** (full-text lexical search) and **kNN** (semantic vector search) on **Elasticsearch**
+- **Queue-based ingestion** via **Redis** for asynchronous document processing and pipeline decoupling
+- **Hugging Face Inference API** for generating semantic embeddings at scale
+- **Reciprocal Rank Fusion (RRF)** algorithm to intelligently merge rankings from both search paths without requiring individual scores
+- Intelligent **text preprocessing** with normalization, validation, and boilerplate stripping
+
+**Outcome**
+- Unified search interface balancing keyword precision and semantic recall
+- **Interface-driven design** (`TextProcessor`, `Embeddings`, `SearchEngine`) enabling zero-change swaps to alternative backends (e.g., Pinecone, Weaviate)
+- Efficient document ingestion with parallel embedding generation and Elasticsearch indexing
+- RRF scoring ensures documents ranked highly in **either** BM25 **or** kNN receive appropriate boosting in final results
+
+<p align="center">
+  <img src="./docs/search-ingestion.png" alt="Search Ingestion Pipeline" width="75%" />
+</p>
+
+<p align="center">
+  <img src="./docs/search-query.png" alt="Search Query Pipeline" width="75%" />
 </p>
 
 ---
